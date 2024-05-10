@@ -5,7 +5,7 @@ Welcome to REPMS.
 This application allows users to manage properties, property owners, and tenants using a CLI interface.
 
 ## Tools
-This file has been built using the following tools:
+This application has been built using the following tools:
 
 - python 3.8.13
 
