@@ -2,12 +2,14 @@
 
 Welcome to REPMS.
 
-This application allows users to manage properties, property owners, and tenants using a CLI interface.
+This is a Python-based Real Estate Property Management System built using SQLAlchemy, a popular Object-Relational Mapping (ORM) library for Python. The system allows users to manage owners, properties, and tenants within a real estate context.
 
 ## Tools
 This application has been built using the following tools:
 
 - python 3.8.13
+- SQLAlchemy
+- SQLite
 
 ## Prerequisites
 Inorder to get this application working, you need the following:
@@ -18,6 +20,7 @@ Inorder to get this application working, you need the following:
 4. A working Terminal interface
 5. python installed in your computer
 6. A python interpreter
+7. SQLAlchemy and SQLite
 
 ## Installation
 1. Clone this repository
@@ -26,18 +29,44 @@ https://github.com/James-Kimanzi/PHASE-3-PROJECT--james-kimanzi----REPMS
 
 ```
 2. Open cloned code in VScode
-3. Install dependencies using Pipenv: `pipenv install`
-4. Activate the virtual environment: `pipenv shell`
+3. Install dependencies using Pipenv: `pip install sqlalchemy` in a new terminal window.
+4. Create the SQLite database file property_management.db by running the main script: `python main.py`
+5. Run `python main.py` to start the CLI and run the program.
+6. Follow the on-screen prompts to manage owners, properties and tenants.
 
 ## Usage
-- Run `python main.py` to start the CLI.
-- Follow the on-screen prompts to manage properties, owners, and tenants.
+Upon running the program, you'll be presented with a menu where you can choose various options to manage owners, properties, tenants, and view related objects. 
+
+Simply follow the prompts and input the required information as per the menu instructions.
 
 ## Features
-- Add new property owners, properties, and tenants.
-- Delete a property or owner by ID.
-- Find a property or owner by ID.
-- List all properties or tenants of an owner.
+1. Owner Management
+
+- Add new owners with details such as name, phone number, physical address, and occupation.
+- Update existing owner details.
+- Delete owners from the database.
+
+2. Property Management
+
+- Add new properties with an associated owner.
+- Update property details including the address.
+- Delete properties from the database.
+
+3. Tenant Management
+
+- Add new tenants to a specific property.
+- Update tenant details.
+- Delete tenants from the database.
+
+4. Display Information
+
+- Display a list of all owners, properties, and tenants.
+- Find owners, properties, or tenants by their respective IDs.
+
+5. View Related Objects
+
+- View properties owned by a specific owner.
+- View tenants residing in a particular property.
 
 ## Authors
 This repo is currently maintained by:
@@ -56,6 +85,11 @@ https://github.com/James-Kimanzi/PHASE-3-PROJECT--james-kimanzi----REPMS
  - https://moringa.instructure.com/courses/565
  - https://docs.python.org/3.8/
  - https://www.w3schools.com/
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions, improvements, or feature requests, please feel free to open an issue or submit a pull request
+
 
  ## Licences
 This project is ported under the MIT licence:
