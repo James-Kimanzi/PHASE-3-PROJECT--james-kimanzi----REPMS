@@ -16,6 +16,9 @@ class Owner(Base):
     __tablename__ = 'owners'  # Define the table name in the database
     id = Column(Integer, primary_key=True)  # Primary key column for owner ID
     name = Column(String, nullable=False)  # Column for owner's name
+    phone_number = Column(String)  # Column for owner's phone number
+    physical_address = Column(String)  # Column for owner's physical address
+    occupation = Column(String)  # Column for owner's occupation
     # Define a one-to-many relationship with properties (one owner can have many properties)
     properties = relationship('Property', back_populates='owner')
 
@@ -35,6 +38,8 @@ class Tenant(Base):
     __tablename__ = 'tenants'  # Define the table name in the database
     id = Column(Integer, primary_key=True)  # Primary key column for tenant ID
     name = Column(String, nullable=False)  # Column for tenant's name
+    phone_number = Column(String)  # Column for tenant's phone number
+    physical_address = Column(String)  # Column for tenant's physical address
     property_id = Column(Integer, ForeignKey('properties.id'))  # Foreign key referencing property ID
     # Define a many-to-one relationship with properties (many tenants can be in one property)
     property = relationship('Property', back_populates='tenants')
