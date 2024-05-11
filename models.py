@@ -38,4 +38,5 @@ class Tenant(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     property_id = Column(Integer, ForeignKey('properties.id'))
+    owner_id = Column(Integer, ForeignKey('property_owners.id'))
     owner = relationship('PropertyOwner', back_populates='tenants')

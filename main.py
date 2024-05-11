@@ -112,3 +112,6 @@ def find_property(property_id):
 # Execute the CLI commands if the script is run directly
 if __name__ == '__main__':
     cli()
+
+
+
