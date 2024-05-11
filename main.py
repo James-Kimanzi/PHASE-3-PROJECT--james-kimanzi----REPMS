@@ -1,4 +1,9 @@
 from models import Session, Owner, Property, Tenant
+from models import Session, Base, engine
+
+# Create tables if they don't exist
+Base.metadata.create_all(engine)
+
 
 # Function to add a new owner to the database
 def add_owner():
@@ -204,7 +209,7 @@ def main():
         elif choice == '11':
             view_related_objects()
         elif choice == '12':
-            print("Exiting the program.")
+            print("Exiting the program...")
             break
         else:
             print("Invalid choice. Please try again.")

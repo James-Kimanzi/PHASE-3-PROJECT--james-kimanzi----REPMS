@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 Base = declarative_base()
 
 # Create an engine to connect to the SQLite database
-engine = create_engine('sqlite:///property_management.db')
+engine = create_engine('sqlite:///property_management.db', echo=True)
 
 # Create a session maker to interact with the database
 Session = sessionmaker(bind=engine)
