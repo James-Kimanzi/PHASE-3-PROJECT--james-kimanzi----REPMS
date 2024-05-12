@@ -8,8 +8,24 @@ Base.metadata.create_all(engine)
 # Function to add a new owner to the database
 def add_owner():
     session = Session()
-    name = input("Enter owner's name: ")
-    phone_number = input("Enter owner's phone number: ")
+
+        # Input validation for owner's name
+    while True:
+        name = input("Enter owner's name: ")
+        if name.replace(" ", "").isalpha() and 2 <= len(name) <= 25:
+            break
+        else:
+            print("Invalid name format. Name must be alphabetic (including spaces) and between 2 to 25 characters.")
+
+        # Input validation for owner's phone number
+    while True:
+        phone_number = input("Enter owner's phone number: ")
+        # Allow numeric characters, "+", "-", and "_" in the phone number
+        if all(c.isdigit() or c in "+-_ " for c in phone_number) and len(phone_number) >= 10:
+            break
+        else:
+            print("Invalid phone number format. Phone number must be numeric and at least 10 characters long.")
+
     physical_address = input("Enter owner's physical address: ")
     occupation = input("Enter owner's occupation: ")
     owner = Owner(name=name, phone_number=phone_number, physical_address=physical_address, occupation=occupation)
@@ -20,21 +36,41 @@ def add_owner():
 # Function to update a new owner to the database
 def update_owner():
     session = Session()
-    owner_id = int(input("Enter owner ID to update: "))
-    owner = session.query(Owner).filter_by(id=owner_id).first()
-    if owner:
-        new_name = input("Enter new name for owner: ")
-        new_phone_number = input("Enter new phone number for owner: ")
-        new_physical_address = input("Enter new physical address for owner: ")
-        new_occupation = input("Enter new occupation for owner: ")
-        owner.name = new_name
-        owner.phone_number = new_phone_number
-        owner.physical_address = new_physical_address
-        owner.occupation = new_occupation
-        session.commit()
-        print(f"Owner ID {owner_id} updated successfully.")
-    else:
-        print("Owner ID not found.")
+
+    while True:
+        owner_id = input("Enter owner ID to update: ")
+        if owner_id.isdigit():
+            owner_id = int(owner_id)
+            owner = session.query(Owner).filter_by(id=owner_id).first()
+            if owner:
+                break
+            else:
+                print("Owner ID not found.")
+        else:
+            print("Invalid owner ID format. Please enter a valid numeric ID.")
+
+    print("Enter new information. Leave blank to keep the current value.")
+
+    new_name = input(f"Enter new name for owner ({owner.name}): ").strip() or owner.name
+    while not new_name.replace(" ", "").isalpha() or not 2 <= len(new_name) <= 25:
+        print("Invalid name format. Name must be alphabetic (including spaces) and between 2 to 25 characters.")
+        new_name = input(f"Enter new name for owner ({owner.name}): ").strip() or owner.name
+
+    new_phone_number = input(f"Enter new phone number for owner ({owner.phone_number}): ").strip() or owner.phone_number
+    while not all(c.isdigit() or c in "+-_ " for c in new_phone_number) or len(new_phone_number) < 10:
+        print("Invalid phone number format. Phone number must be numeric and at least 10 characters long.")
+        new_phone_number = input(f"Enter new phone number for owner ({owner.phone_number}): ").strip() or owner.phone_number
+
+    new_physical_address = input(f"Enter new physical address for owner ({owner.physical_address}): ").strip() or owner.physical_address
+    new_occupation = input(f"Enter new occupation for owner ({owner.occupation}): ").strip() or owner.occupation
+
+    owner.name = new_name
+    owner.phone_number = new_phone_number
+    owner.physical_address = new_physical_address
+    owner.occupation = new_occupation
+
+    session.commit()
+    print(f"Owner ID {owner_id} updated successfully.")
 
 # Function to delete an owner by ID
 def delete_owner():
@@ -53,16 +89,33 @@ def delete_owner():
 # Function to add a new property with an owner
 def add_property():
     session = Session()
-    address = input("Enter property address: ")
-    owner_id = int(input("Enter owner ID for this property: "))
-    owner = session.query(Owner).filter_by(id=owner_id).first()
-    if owner:
-        property = Property(address=address, owner_id=owner_id)
-        session.add(property)
-        session.commit()
-        print(f"Property '{address}' added successfully with Owner ID {owner_id}.")
-    else:
-        print("Owner ID not found.")
+    
+    while True:
+        address = input("Enter property address: ").strip()
+        if address:
+            break
+        else:
+            print("Property address cannot be blank.")
+
+    while True:
+        owner_id_input = input("Enter owner ID for this property: ").strip()
+        if owner_id_input:
+            try:
+                owner_id = int(owner_id_input)
+                owner = session.query(Owner).filter_by(id=owner_id).first()
+                if owner:
+                    break
+                else:
+                    print("Owner ID not found.")
+            except ValueError:
+                print("Invalid owner ID format. Please enter a valid numeric ID.")
+        else:
+            print("Owner ID cannot be blank.")
+
+    property = Property(address=address, owner_id=owner_id)
+    session.add(property)
+    session.commit()
+    print(f"Property '{address}' added successfully with Owner ID {owner_id}.")
 
 # Function to update a new property with an owner
 def update_property():
@@ -91,14 +144,27 @@ def delete_property():
         print("Property ID not found.")
 
 ### ADD, UPDATE & DELETE TENANT
+
 # Function to add a new tenant to a property
 def add_tenant():
     session = Session()
     property_id = int(input("Enter property ID for tenant: "))
     property = session.query(Property).filter_by(id=property_id).first()
     if property:
-        name = input("Enter tenant's name: ")
-        phone_number = input("Enter tenant's phone number: ")
+        while True:
+            name = input("Enter tenant's name: ")
+            if name.replace(" ", "").isalpha() and 2 <= len(name) <= 25:
+                break
+            else:
+                print("Invalid name format. Name must be alphabetic (including spaces) and between 2 to 25 characters.")
+
+        while True:
+            phone_number = input("Enter tenant's phone number: ")
+            if all(c.isdigit() or c in "+-_ " for c in phone_number) and len(phone_number) >= 10:
+                break
+            else:
+                print("Invalid phone number format. Phone number must be numeric and at least 10 characters long.")
+
         physical_address = input("Enter tenant's physical address: ")
         tenant = Tenant(name=name, phone_number=phone_number, physical_address=physical_address, property_id=property_id)
         session.add(tenant)
@@ -113,12 +179,24 @@ def update_tenant():
     tenant_id = int(input("Enter tenant ID to update: "))
     tenant = session.query(Tenant).filter_by(id=tenant_id).first()
     if tenant:
-        new_name = input("Enter new name for tenant: ")
-        new_phone_number = input("Enter new phone number for tenant: ")
-        new_physical_address = input("Enter new physical address for tenant: ")
+        print("Enter new information. Leave blank to keep the current value.")
+
+        new_name = input(f"Enter new name for tenant ({tenant.name}): ").strip() or tenant.name
+        while not new_name.replace(" ", "").isalpha() or not 2 <= len(new_name) <= 25:
+            print("Invalid name format. Name must be alphabetic (including spaces) and between 2 to 25 characters.")
+            new_name = input(f"Enter new name for tenant ({tenant.name}): ").strip() or tenant.name
+
+        new_phone_number = input(f"Enter new phone number for tenant ({tenant.phone_number}): ").strip() or tenant.phone_number
+        while not all(c.isdigit() or c in "+-_ " for c in new_phone_number) or len(new_phone_number) < 10:
+            print("Invalid phone number format. Phone number must be numeric and at least 10 characters long.")
+            new_phone_number = input(f"Enter new phone number for tenant ({tenant.phone_number}): ").strip() or tenant.phone_number
+
+        new_physical_address = input(f"Enter new physical address for tenant ({tenant.physical_address}): ").strip() or tenant.physical_address
+
         tenant.name = new_name
         tenant.phone_number = new_phone_number
         tenant.physical_address = new_physical_address
+
         session.commit()
         print(f"Tenant ID {tenant_id} updated successfully.")
     else:
@@ -146,7 +224,12 @@ def display_owners():
     if owners:
         print("Owners:")
         for owner in owners:
-            print(f"ID: {owner.id}, Name: {owner.name}")
+            print(f"ID: {owner.id}")
+            print(f"Name: {owner.name}")
+            print(f"Phone Number: {owner.phone_number}")
+            print(f"Physical Address: {owner.physical_address}")
+            print(f"Occupation: {owner.occupation}")
+            print("-" * 20)  # Separate each owner's details
     else:
         print("No owners found.")
 
@@ -161,14 +244,19 @@ def display_properties():
     else:
         print("No properties found.")
 
-# Function to display all tenants
+# Function to display all tenants with all input fields
 def display_tenants():
     session = Session()
     tenants = session.query(Tenant).all()
     if tenants:
         print("Tenants:")
         for tenant in tenants:
-            print(f"ID: {tenant.id}, Name: {tenant.name}, Property ID: {tenant.property_id}")
+            print(f"ID: {tenant.id}")
+            print(f"   Name: {tenant.name}")
+            print(f"   Phone Number: {tenant.phone_number}")
+            print(f"   Physical Address: {tenant.physical_address}")
+            print(f"   Property ID: {tenant.property_id}")
+            print("-" * 20)  # Separate each tenants's details
     else:
         print("No tenants found.")
 
