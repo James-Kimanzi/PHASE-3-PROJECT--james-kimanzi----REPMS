@@ -225,10 +225,10 @@ def display_owners():
         print("Owners:")
         for owner in owners:
             print(f"ID: {owner.id}")
-            print(f"Name: {owner.name}")
-            print(f"Phone Number: {owner.phone_number}")
-            print(f"Physical Address: {owner.physical_address}")
-            print(f"Occupation: {owner.occupation}")
+            print(f"  Name: {owner.name}")
+            print(f"  Phone Number: {owner.phone_number}")
+            print(f"  Physical Address: {owner.physical_address}")
+            print(f"  Occupation: {owner.occupation}")
             print("-" * 20)  # Separate each owner's details
     else:
         print("No owners found.")
@@ -240,7 +240,10 @@ def display_properties():
     if properties:
         print("Properties:")
         for property in properties:
-            print(f"ID: {property.id}, Address: {property.address}, Owner ID: {property.owner_id}")
+            print(f"ID: {property.id}")
+            print(f"  Address: {property.address}")
+            print(f"  Owner ID: {property.owner_id}")
+            print("-" * 20)  # Separate each property details
     else:
         print("No properties found.")
 
