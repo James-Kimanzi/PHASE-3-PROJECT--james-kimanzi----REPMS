@@ -86,6 +86,7 @@ class Owner:
         if confirmation.lower() == 'y':
             cursor.execute('DELETE FROM owners WHERE id=?', (owner_id,))
             conn.commit()
+            print(f"Owner with ID {owner_id} deleted successfully.")
 
     @staticmethod
     def get_all():
@@ -119,6 +120,7 @@ class Property:
         if confirmation.lower() == 'y':
             cursor.execute('DELETE FROM properties WHERE id=?', (property_id,))
             conn.commit()
+            print(f"Property with ID {property_id} deleted successfully.")
 
     @staticmethod
     def get_all():
@@ -165,6 +167,7 @@ class Tenant:
         if confirmation.lower() == 'y':
             cursor.execute('DELETE FROM tenants WHERE id=?', (tenant_id,))
             conn.commit()
+            print(f"Tenant ID {tenant_id} deleted successfully.")
 
     @staticmethod
     def get_all():

@@ -57,7 +57,12 @@ def main():
             print(f"Owner '{name}' added successfully.")
 
         elif choice == '2':
-            owner_id = int(input("Enter owner ID to update: "))
+            try:
+                owner_id = int(input("Enter owner ID to update: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for owner ID.")
+                continue  # Restart the loop to prompt the user again
+
             owner = Owner.find_by_id(owner_id)
             if owner:
                 # Validate and update name
@@ -89,11 +94,15 @@ def main():
                 print("Owner not found.")
 
         elif choice == '3':
-            owner_id = int(input("Enter owner ID to delete: "))
+            try:
+                owner_id = int(input("Enter owner ID to delete: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for owner ID.")
+                continue  # Restart the loop to prompt the user again
+
             owner = Owner.find_by_id(owner_id)
             if owner:
-                Owner.delete(owner_id)
-                print(f"Owner with ID {owner_id} deleted successfully.")
+                Owner.delete(owner_id)                
             else:
                 print("Owner not found.")
 
@@ -113,7 +122,12 @@ def main():
                 print("No owners found.")
 
         elif choice == '5':
-            owner_id = int(input("Enter owner ID to find: "))
+            try:
+                owner_id = int(input("Enter owner ID to find: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for owner ID.")
+                continue  # Restart the loop to prompt the user again
+
             owner = Owner.find_by_id(owner_id)
             if owner:
                 print(f"Owner ID: {owner[0]}, Name: {owner[1]}")
@@ -122,13 +136,24 @@ def main():
 
             # Property Methods
         elif choice == '6':
-            address = input("Enter property address: ")
+            try:
+                address = input("Enter property address: ")
+                owner_id = int(input("Enter owner ID for this property: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for owner ID.")
+                continue  # Restart the loop to prompt the user again
+
             owner_id = int(input("Enter owner ID for this property: "))
             Property.create(address, owner_id)
             print(f"Property '{address}' added successfully with Owner ID {owner_id}.")
 
         elif choice == '7':
-            property_id = int(input("Enter property ID to update: "))
+            try:
+                property_id = int(input("Enter property ID to update: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for property ID.")
+                continue  # Restart the loop to prompt the user again
+
             property = Property.find_by_id(property_id)
             if property:
                 address = input(f"Enter new address for property ({property[1]}): ")
@@ -138,11 +163,15 @@ def main():
                 print("Property not found.")
 
         elif choice == '8':
-            property_id = int(input("Enter property ID to delete: "))
+            try:
+                property_id = int(input("Enter property ID to delete: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for property ID.")
+                continue  # Restart the loop to prompt the user again
+
             property = Property.find_by_id(property_id)
             if property:
-                Property.delete(property_id)
-                print(f"Property with ID {property_id} deleted successfully.")
+                Property.delete(property_id)                
             else:
                 print("Property not found.")
 
@@ -160,7 +189,12 @@ def main():
                 print("No properties found.")
 
         elif choice == '10':
-            property_id = int(input("Enter property ID to find: "))
+            try:
+                property_id = int(input("Enter property ID to find: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for property ID.")
+                continue  # Restart the loop to prompt the user again
+
             property = Property.find_by_id(property_id)
             if property:
                 print(f"Property ID: {property[0]}, Address: {property[1]}, Owner ID: {property[2]}")
@@ -178,7 +212,12 @@ def main():
             print(f"Tenant '{name}' added successfully to Property ID {property_id}.")
 
         elif choice == '12':
-            tenant_id = int(input("Enter tenant ID to update: "))
+            try:
+                tenant_id = int(input("Enter tenant ID to update: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for tenant ID.")
+                continue  # Restart the loop to prompt the user again
+
             tenant = Tenant.find_by_id(tenant_id)
             if tenant:
                 # Validate and update name
@@ -209,11 +248,15 @@ def main():
                 print("Tenant not found.")
 
         elif choice == '13':
-            tenant_id = int(input("Enter tenant ID to delete: "))
+            try:
+                tenant_id = int(input("Enter tenant ID to delete: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for tenant ID.")
+                continue  # Restart the loop to prompt the user again
+
             tenant = Tenant.find_by_id(tenant_id)
             if tenant:
-                Tenant.delete(tenant_id)
-                print(f"Tenant ID {tenant_id} deleted successfully.")
+                Tenant.delete(tenant_id)                
             else:
                 print("Tenant not found.")   
         
@@ -233,7 +276,12 @@ def main():
                 print("No tenants found.")      
         
         elif choice == '15':
-            tenant_id = int(input("Enter tenant ID to find: "))
+            try:
+                tenant_id = int(input("Enter tenant ID to find: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for tenant ID.")
+                continue  # Restart the loop to prompt the user again
+
             tenant = Tenant.find_by_id(tenant_id)
             if tenant:
                 print(f"Tenant ID: {tenant[0]}, Name: {tenant[1]}, Property ID: {tenant[4]}")
@@ -242,7 +290,12 @@ def main():
 
         elif choice == '16':
             # View properties owned by a specific owner
-            owner_id = int(input("Enter owner ID to view properties: "))
+            try:
+                owner_id = int(input("Enter owner ID to view properties: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for owner ID.")
+                continue  # Restart the loop to prompt the user again
+
             properties = Property.get_properties_by_owner(owner_id)
             if properties:
                 print(f"Properties owned by Owner ID {owner_id}:")
@@ -252,7 +305,12 @@ def main():
                 print("No properties found for this owner.")
 
             # View tenants residing in a particular property
-            property_id = int(input("Enter property ID to view tenants: "))
+            try:
+                property_id = int(input("Enter property ID to view tenants: "))
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for property ID.")
+                continue  # Restart the loop to prompt the user again
+
             tenants = Tenant.get_tenants_by_property(property_id)
             if tenants:
                 print(f"Tenants residing in Property ID {property_id}:")
