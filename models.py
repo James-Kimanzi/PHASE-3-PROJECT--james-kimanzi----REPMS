@@ -129,6 +129,11 @@ class Property:
     def find_by_id(property_id):
         cursor.execute('SELECT * FROM properties WHERE id=?', (property_id,))
         return cursor.fetchone()
+    
+    @staticmethod
+    def get_properties_by_owner(owner_id):
+        cursor.execute('SELECT * FROM properties WHERE owner_id=?', (owner_id,))
+        return cursor.fetchall()
 
 # Define the Tenant class with ORM methods
 class Tenant:
@@ -170,3 +175,8 @@ class Tenant:
     def find_by_id(tenant_id):
         cursor.execute('SELECT * FROM tenants WHERE id=?', (tenant_id,))
         return cursor.fetchone()
+    
+    @staticmethod
+    def get_tenants_by_property(property_id):
+        cursor.execute('SELECT * FROM tenants WHERE property_id=?', (property_id,))
+        return cursor.fetchall()

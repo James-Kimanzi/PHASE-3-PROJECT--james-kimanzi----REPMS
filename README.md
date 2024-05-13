@@ -8,7 +8,6 @@ This is a Python-based Real Estate Property Management System built using SQLAlc
 This application has been built using the following tools:
 
 - python 3.8.13
-- SQLAlchemy
 - SQLite
 
 ## Prerequisites
@@ -20,7 +19,7 @@ Inorder to get this application working, you need the following:
 4. A working Terminal interface
 5. python installed in your computer
 6. A python interpreter
-7. SQLAlchemy and SQLite
+7. SQLite
 
 ## Installation
 1. Clone this repository
@@ -29,10 +28,9 @@ https://github.com/James-Kimanzi/PHASE-3-PROJECT--james-kimanzi----REPMS
 
 ```
 2. Open cloned code in VScode
-3. Install dependencies using Pipenv: `pip install sqlalchemy` in a new terminal window.
-4. Create the SQLite database file property_management.db by running the main script: `python main.py`
-5. Run `python main.py` to start the CLI and run the program.
-6. Follow the on-screen prompts to manage owners, properties and tenants.
+3. Create the SQLite database file property_management.db by running the main script: `python main.py`
+4. Run `python main.py` to start the CLI and run the program.
+5. Follow the on-screen prompts to manage owners, properties and tenants.
 
 ## Usage
 Upon running the program, you'll be presented with a menu where you can choose various options to manage owners, properties, tenants, and view related objects. 

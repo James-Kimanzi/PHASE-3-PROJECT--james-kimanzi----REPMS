@@ -178,28 +178,25 @@ def main():
                 print("Tenant not found.")
 
         elif choice == '16':
-            # View Related Objects
-            owners = Owner.get_all()
-            properties = Property.get_all()
-            tenants = Tenant.get_all()
+            # View properties owned by a specific owner
+            owner_id = int(input("Enter owner ID to view properties: "))
+            properties = Property.get_properties_by_owner(owner_id)
+            if properties:
+                print(f"Properties owned by Owner ID {owner_id}:")
+                for property in properties:
+                    print(f"ID: {property[0]}, Address: {property[1]}")
+            else:
+                print("No properties found for this owner.")
 
-            print("Owners:")
-            print("-" * 20)
-            for owner in owners:
-                print(f"ID: {owner[0]}, Name: {owner[1]}")
-            print("-" * 20)
-
-            print("Properties:")
-            print("-" * 20)
-            for property in properties:
-                print(f"ID: {property[0]}, Address: {property[1]}")
-            print("-" * 20)
-
-            print("Tenants:")
-            print("-" * 20)
-            for tenant in tenants:
-                print(f"ID: {tenant[0]}, Name: {tenant[1]}")
-            print("-" * 20)
+            # View tenants residing in a particular property
+            property_id = int(input("Enter property ID to view tenants: "))
+            tenants = Tenant.get_tenants_by_property(property_id)
+            if tenants:
+                print(f"Tenants residing in Property ID {property_id}:")
+                for tenant in tenants:
+                    print(f"ID: {tenant[0]}, Name: {tenant[1]}")
+            else:
+                print("No tenants found for this property.")
 
         elif choice == '17':
             print("Exiting the program...")
