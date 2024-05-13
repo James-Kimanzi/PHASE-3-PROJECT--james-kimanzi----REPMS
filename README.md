@@ -2,7 +2,7 @@
 
 Welcome to REPMS.
 
-This is a Python-based Real Estate Property Management System built using SQLAlchemy, a popular Object-Relational Mapping (ORM) library for Python. The system allows users to manage owners, properties, and tenants within a real estate context.
+This is a simple Real Estate Property Management System implemented in Python using SQLite for database management. It allows users to manage owners, properties, and tenants in a real estate system.
 
 ## Tools
 This application has been built using the following tools:
