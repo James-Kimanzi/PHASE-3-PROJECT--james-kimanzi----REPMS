@@ -1,4 +1,20 @@
 from models import Owner, Property, Tenant
+import re  # Import regular expression module from python standard library
+
+# Function to validate a name input
+def validate_name(name):
+    while not re.match(r"^[a-zA-Z ]+$", name.strip()):  # Allows alphabets and spaces only
+        print("Invalid name format. Please enter a valid name (alphabets and spaces only).")
+        name = input("Enter name again: ")
+    return name.strip()
+
+# Function to validate a phone number input
+def validate_phone_number(phone_number):
+    while not re.match(r"^\d{10,}$", phone_number.strip()): # Requires 10 digits or more for phone number
+        print("Invalid phone number format. Please enter a valid 10-digit phone number.")
+        phone_number = input("Enter phone number again: ")
+    return phone_number.strip()
+
 
 # Main function to handle user interaction and menu display
 def main():
@@ -33,21 +49,42 @@ def main():
 
             # Owner Methods
         if choice == '1':
-            name = input("Enter owner's name: ")
-            phone_number = input("Enter owner's phone number: ")
+            name = validate_name(input("Enter owner's name: "))
+            phone_number = validate_phone_number(input("Enter owner's phone number: "))
             physical_address = input("Enter owner's physical address: ")
             occupation = input("Enter owner's occupation: ")
             Owner.create(name, phone_number, physical_address, occupation)
+            print(f"Owner '{name}' added successfully.")
 
         elif choice == '2':
             owner_id = int(input("Enter owner ID to update: "))
             owner = Owner.find_by_id(owner_id)
             if owner:
-                name = input(f"Enter new name for owner ({owner[1]}): ")
-                phone_number = input(f"Enter new phone number for owner ({owner[2]}): ")
-                physical_address = input(f"Enter new physical address for owner ({owner[3]}): ")
-                occupation = input(f"Enter new occupation for owner ({owner[4]}): ")
+                # Validate and update name
+                while True:
+                    name_input = input(f"Enter new name for owner ({owner[1]}), or press Enter to leave unchanged: ")
+                    if name_input.strip():  # Check if input is not empty
+                        name = validate_name(name_input)
+                        break
+                    else:
+                        name = owner[1]
+                        break
+
+                # Validate and update phone number
+                while True:
+                    phone_input = input(f"Enter new phone number for owner ({owner[2]}), or press Enter to leave unchanged: ")
+                    if phone_input.strip():  # Check if input is not empty
+                        phone_number = validate_phone_number(phone_input)
+                        break
+                    else:
+                        phone_number = owner[2]
+                        break
+
+                physical_address = input(f"Enter new physical address for owner ({owner[3]}), or press Enter to leave unchanged: ")
+                occupation = input(f"Enter new occupation for owner ({owner[4]}), or press Enter to leave unchanged: ")
+
                 Owner.update(owner_id, name, phone_number, physical_address, occupation)
+                print(f"Owner ID {owner_id} updated successfully.")
             else:
                 print("Owner not found.")
 
@@ -56,6 +93,7 @@ def main():
             owner = Owner.find_by_id(owner_id)
             if owner:
                 Owner.delete(owner_id)
+                print(f"Owner with ID {owner_id} deleted successfully.")
             else:
                 print("Owner not found.")
 
@@ -87,6 +125,7 @@ def main():
             address = input("Enter property address: ")
             owner_id = int(input("Enter owner ID for this property: "))
             Property.create(address, owner_id)
+            print(f"Property '{address}' added successfully with Owner ID {owner_id}.")
 
         elif choice == '7':
             property_id = int(input("Enter property ID to update: "))
@@ -94,6 +133,7 @@ def main():
             if property:
                 address = input(f"Enter new address for property ({property[1]}): ")
                 Property.update(property_id, address)
+                print(f"Property ID {property_id} updated successfully.")
             else:
                 print("Property not found.")
 
@@ -102,6 +142,7 @@ def main():
             property = Property.find_by_id(property_id)
             if property:
                 Property.delete(property_id)
+                print(f"Property with ID {property_id} deleted successfully.")
             else:
                 print("Property not found.")
 
@@ -129,20 +170,41 @@ def main():
 
             # Tenant Methods
         elif choice == '11':
-            name = input("Enter tenant's name: ")
-            phone_number = input("Enter tenant's phone number: ")
+            name = validate_name(input("Enter tenant's name: "))
+            phone_number = validate_phone_number(input("Enter tenant's phone number: "))
             physical_address = input("Enter tenant's physical address: ")
-            property_id = int(input("Enter property ID for this tenant: "))
+            property_id = input("Enter property ID for this tenant: ")
             Tenant.create(name, phone_number, physical_address, property_id)
+            print(f"Tenant '{name}' added successfully to Property ID {property_id}.")
 
         elif choice == '12':
             tenant_id = int(input("Enter tenant ID to update: "))
             tenant = Tenant.find_by_id(tenant_id)
             if tenant:
-                name = input(f"Enter new name for tenant ({tenant[1]}): ")
-                phone_number = input(f"Enter new phone number for tenant ({tenant[2]}): ")
-                physical_address = input(f"Enter new physical address for tenant ({tenant[3]}): ")
+                # Validate and update name
+                while True:
+                    name_input = input(f"Enter new name for tenant ({tenant[1]}), or press Enter to leave unchanged: ")
+                    if name_input.strip():  # Check if input is not empty
+                        name = validate_name(name_input)
+                        break
+                    else:
+                        name = tenant[1]
+                        break
+
+                # Validate and update phone number
+                while True:
+                    phone_input = input(f"Enter new phone number for tenant ({tenant[2]}), or press Enter to leave unchanged: ")
+                    if phone_input.strip():  # Check if input is not empty
+                        phone_number = validate_phone_number(phone_input)
+                        break
+                    else:
+                        phone_number = tenant[2]
+                        break
+
+                physical_address = input(f"Enter new physical address for tenant ({tenant[3]}), or press Enter to leave unchanged: ")
+
                 Tenant.update(tenant_id, name, phone_number, physical_address)
+                print(f"Tenant ID {tenant_id} updated successfully.")
             else:
                 print("Tenant not found.")
 
@@ -151,6 +213,7 @@ def main():
             tenant = Tenant.find_by_id(tenant_id)
             if tenant:
                 Tenant.delete(tenant_id)
+                print(f"Tenant ID {tenant_id} deleted successfully.")
             else:
                 print("Tenant not found.")   
         
